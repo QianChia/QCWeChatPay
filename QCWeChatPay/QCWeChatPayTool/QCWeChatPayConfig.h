@@ -47,7 +47,7 @@
  * -----------------------------------
  */
 
-#define kUrlUserWeChatPay           @"test"
+#define QCUrlUserWeChatPay          @"test"
 
 
 /**
@@ -56,7 +56,7 @@
  * -----------------------------------
  */
 
-#define kUrlWeChatUnifiedOrder      @"https://api.mch.weixin.qq.com/pay/unifiedorder"
+#define QCUrlWeChatUnifiedOrder     @"https://api.mch.weixin.qq.com/pay/unifiedorder"
 
 
 /**

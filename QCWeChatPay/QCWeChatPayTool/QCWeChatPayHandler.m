@@ -32,32 +32,24 @@
 + (void)QCWeChatPay_SER {
     
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    
+    // 在此设置商户服务端需要的参数
     params[WXTOTALFEE] = @"1";
     params[WXEQUIPMENTIP] = [self fetchIPAddress];
 
     // 向商户微信支付服务器端请求微信预支付信息
     AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
-//    [sessionManager.requestSerializer setValue:@"text/html; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    
-    [sessionManager POST:kUrlUserWeChatPay
+
+    [sessionManager POST:QCUrlUserWeChatPay
               parameters:params
                 progress:nil
                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-
+        
+        // 解析商户微信支付服务器端返回的数据，获得预支付信息和签名等
+        
         NSLog(@"responseObject = %@",responseObject);
-
-//        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
-//        NSLog(@"dictionary = %@",dictionary);
-
-//        //  输出XML数据
-//        NSString *responseString = [[NSString alloc] initWithData:responseObject
-//                                                         encoding:NSUTF8StringEncoding] ;
-//        //  将微信返回的 xml 数据解析转义成字典
-//        NSDictionary *dic = [NSDictionary dictionaryWithXMLString:responseString];
-//
-        // 判断返回的许可
-        if ([[responseObject objectForKey:@"result_code"] isEqualToString:@"SUCCESS"]
-            &&[[responseObject objectForKey:@"return_code"] isEqualToString:@"SUCCESS"] ) {
+        
+        if (responseObject != nil) {
 
             // 发起微信支付
             PayReq *request = [[PayReq alloc] init];
@@ -66,28 +58,14 @@
             request.openID = [responseObject objectForKey:WXAPPID];
             request.partnerId = [responseObject objectForKey:WXMCHID];
             request.prepayId= [responseObject objectForKey:WXPREPAYID];
-            request.package = @"Sign=WXPay";
             request.nonceStr= [responseObject objectForKey:WXNONCESTR];
-
-            // 将当前时间转化成时间戳
             request.timeStamp= [[responseObject objectForKey:@"timestamp"] intValue];
-//            NSDate *datenow = [NSDate date];
-//            NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
-//            UInt32 timeStamp =[timeSp intValue];
-
-            // 签名加密
+            request.package = @"Sign=WXPay";
             request.sign = [responseObject objectForKey:@"sign"];
-//            DataMD5 *md5 = [[DataMD5 alloc] init];
-//            request.sign=[md5 createMD5SingForPay:request.openID
-//                                        partnerid:request.partnerId
-//                                         prepayid:request.prepayId
-//                                          package:request.package
-//                                         noncestr:request.nonceStr
-//                                        timestamp:request.timeStamp];
 
             NSLog(@"%@--%@--%@--%@--%@--%d--%@",request.openID,request.partnerId,request.prepayId,request.package,request.nonceStr,request.timeStamp,request.sign);
             
-            // 调用微信
+            // 调用微信发起支付
             [WXApi sendReq:request];
         }
 
@@ -126,12 +104,12 @@
     AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
     sessionManager.responseSerializer = [[AFHTTPResponseSerializer alloc] init];
     [sessionManager.requestSerializer setValue:@"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [sessionManager.requestSerializer setValue:kUrlWeChatUnifiedOrder forHTTPHeaderField:@"SOAPAction"];
+    [sessionManager.requestSerializer setValue:QCUrlWeChatUnifiedOrder forHTTPHeaderField:@"SOAPAction"];
     [sessionManager.requestSerializer setQueryStringSerializationWithBlock:^NSString *(NSURLRequest *request, NSDictionary *parameters, NSError *__autoreleasing *error) {
         return string;
     }];
     
-    [sessionManager POST:kUrlWeChatUnifiedOrder
+    [sessionManager POST:QCUrlWeChatUnifiedOrder
               parameters:string
                 progress:nil
                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
