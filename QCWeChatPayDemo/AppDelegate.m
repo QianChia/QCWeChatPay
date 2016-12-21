@@ -27,17 +27,17 @@
 
 // NS_DEPRECATED_IOS(2_0, 9_0)
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    return  [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
+    return  [WXApi handleOpenURL:url delegate:[QCWeChatPayManager sharedManager]];
 }
 
 // NS_DEPRECATED_IOS(2_0, 9_0)
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
+    return [WXApi handleOpenURL:url delegate:[QCWeChatPayManager sharedManager]];
 }
 
 // NS_AVAILABLE_IOS(9_0) 9.0 以后使用新 API 接口
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options {
-    return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
+    return [WXApi handleOpenURL:url delegate:[QCWeChatPayManager sharedManager]];
 }
 
 

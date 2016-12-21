@@ -1,5 +1,5 @@
 //
-//  WXApiManager.h
+//  QCWeChatPayManager.h
 //  QCWeChatPay
 //
 //  Created by JHQ0228 on 2016/12/20.
@@ -12,7 +12,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface WXApiManager : NSObject <WXApiDelegate>
+@interface QCWeChatPayManager : NSObject <WXApiDelegate>
 
 + (instancetype)sharedManager;
 

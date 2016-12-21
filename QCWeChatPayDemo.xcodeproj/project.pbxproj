@@ -30,8 +30,6 @@
 		1A933E0A1E0958E600EB2BAA /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A933DE91E0958E600EB2BAA /* UIWebView+AFNetworking.m */; };
 		1A933E0B1E0958E600EB2BAA /* QCWeChatPayHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A933DED1E0958E600EB2BAA /* QCWeChatPayHandler.m */; };
 		1A933E0C1E0958E600EB2BAA /* QCWeChatSignAdaptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A933DEF1E0958E600EB2BAA /* QCWeChatSignAdaptor.m */; };
-		1A933E0D1E0958E600EB2BAA /* WXApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A933DF11E0958E600EB2BAA /* WXApiManager.m */; };
-		1A933E0E1E0958E600EB2BAA /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A933DF31E0958E600EB2BAA /* XMLDictionary.m */; };
 		1A933E0F1E0958E600EB2BAA /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A933DF51E0958E600EB2BAA /* libWeChatSDK.a */; };
 		1A933E101E0958E600EB2BAA /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1A933DF61E0958E600EB2BAA /* README.txt */; };
 		1A933E141E09599600EB2BAA /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A933E131E09599600EB2BAA /* libz.tbd */; };
@@ -41,6 +39,8 @@
 		1A933E1C1E0959AF00EB2BAA /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A933E1B1E0959AF00EB2BAA /* CoreTelephony.framework */; };
 		1A933E1E1E0959B400EB2BAA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A933E1D1E0959B400EB2BAA /* Security.framework */; };
 		1A933E201E0959BB00EB2BAA /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A933E1F1E0959BB00EB2BAA /* CFNetwork.framework */; };
+		1AAC92DA1E0AC619005840F0 /* QCWeChatPayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AAC92D91E0AC619005840F0 /* QCWeChatPayManager.m */; };
+		1AAC92DE1E0AC9F6005840F0 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AAC92DD1E0AC9F6005840F0 /* XMLDictionary.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,10 +94,6 @@
 		1A933DED1E0958E600EB2BAA /* QCWeChatPayHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCWeChatPayHandler.m; sourceTree = "<group>"; };
 		1A933DEE1E0958E600EB2BAA /* QCWeChatSignAdaptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCWeChatSignAdaptor.h; sourceTree = "<group>"; };
 		1A933DEF1E0958E600EB2BAA /* QCWeChatSignAdaptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCWeChatSignAdaptor.m; sourceTree = "<group>"; };
-		1A933DF01E0958E600EB2BAA /* WXApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiManager.h; sourceTree = "<group>"; };
-		1A933DF11E0958E600EB2BAA /* WXApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXApiManager.m; sourceTree = "<group>"; };
-		1A933DF21E0958E600EB2BAA /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
-		1A933DF31E0958E600EB2BAA /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
 		1A933DF51E0958E600EB2BAA /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		1A933DF61E0958E600EB2BAA /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		1A933DF71E0958E600EB2BAA /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
@@ -111,6 +107,10 @@
 		1A933E1B1E0959AF00EB2BAA /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		1A933E1D1E0959B400EB2BAA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		1A933E1F1E0959BB00EB2BAA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		1AAC92D81E0AC619005840F0 /* QCWeChatPayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCWeChatPayManager.h; sourceTree = "<group>"; };
+		1AAC92D91E0AC619005840F0 /* QCWeChatPayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCWeChatPayManager.m; sourceTree = "<group>"; };
+		1AAC92DC1E0AC9F6005840F0 /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
+		1AAC92DD1E0AC9F6005840F0 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,12 +249,11 @@
 				1A933DEB1E0958E600EB2BAA /* QCWeChatPayConfig.h */,
 				1A933DEC1E0958E600EB2BAA /* QCWeChatPayHandler.h */,
 				1A933DED1E0958E600EB2BAA /* QCWeChatPayHandler.m */,
+				1AAC92D81E0AC619005840F0 /* QCWeChatPayManager.h */,
+				1AAC92D91E0AC619005840F0 /* QCWeChatPayManager.m */,
 				1A933DEE1E0958E600EB2BAA /* QCWeChatSignAdaptor.h */,
 				1A933DEF1E0958E600EB2BAA /* QCWeChatSignAdaptor.m */,
-				1A933DF01E0958E600EB2BAA /* WXApiManager.h */,
-				1A933DF11E0958E600EB2BAA /* WXApiManager.m */,
-				1A933DF21E0958E600EB2BAA /* XMLDictionary.h */,
-				1A933DF31E0958E600EB2BAA /* XMLDictionary.m */,
+				1AAC92DB1E0AC9F6005840F0 /* Tools */,
 			);
 			path = QCWeChatPayTool;
 			sourceTree = "<group>";
@@ -285,6 +284,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		1AAC92DB1E0AC9F6005840F0 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				1AAC92DC1E0AC9F6005840F0 /* XMLDictionary.h */,
+				1AAC92DD1E0AC9F6005840F0 /* XMLDictionary.m */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -311,6 +319,7 @@
 		1A933DA11E09581C00EB2BAA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = QC;
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "QianQian-Studio";
 				TargetAttributes = {
@@ -365,17 +374,17 @@
 				1A933E081E0958E600EB2BAA /* UIProgressView+AFNetworking.m in Sources */,
 				1A933E031E0958E600EB2BAA /* AFImageDownloader.m in Sources */,
 				1A933E021E0958E600EB2BAA /* AFAutoPurgingImageCache.m in Sources */,
+				1AAC92DE1E0AC9F6005840F0 /* XMLDictionary.m in Sources */,
 				1A933DFB1E0958E600EB2BAA /* AFNetworkReachabilityManager.m in Sources */,
 				1A933E061E0958E600EB2BAA /* UIButton+AFNetworking.m in Sources */,
 				1A933E051E0958E600EB2BAA /* UIActivityIndicatorView+AFNetworking.m in Sources */,
-				1A933E0D1E0958E600EB2BAA /* WXApiManager.m in Sources */,
 				1A933DAE1E09581C00EB2BAA /* main.m in Sources */,
 				1A933E091E0958E600EB2BAA /* UIRefreshControl+AFNetworking.m in Sources */,
 				1A933E0A1E0958E600EB2BAA /* UIWebView+AFNetworking.m in Sources */,
 				1A933DFC1E0958E600EB2BAA /* AFSecurityPolicy.m in Sources */,
 				1A933DFD1E0958E600EB2BAA /* AFURLRequestSerialization.m in Sources */,
-				1A933E0E1E0958E600EB2BAA /* XMLDictionary.m in Sources */,
 				1A933E0C1E0958E600EB2BAA /* QCWeChatSignAdaptor.m in Sources */,
+				1AAC92DA1E0AC619005840F0 /* QCWeChatPayManager.m in Sources */,
 				1A933E0B1E0958E600EB2BAA /* QCWeChatPayHandler.m in Sources */,
 				1A933DFE1E0958E600EB2BAA /* AFURLResponseSerialization.m in Sources */,
 				1A933E041E0958E600EB2BAA /* AFNetworkActivityIndicatorManager.m in Sources */,

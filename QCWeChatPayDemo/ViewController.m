@@ -17,7 +17,7 @@
 - (IBAction)WeChatPayClick:(UIButton *)sender {
     
     // 发起微信支付
-    [QCWeChatPayHandler QCWeChatPay_APP];
+    [QCWeChatPayHandler QCWeChatPay_SER];
 }
 
 @end

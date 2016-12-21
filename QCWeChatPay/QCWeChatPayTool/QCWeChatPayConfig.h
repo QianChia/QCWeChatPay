@@ -14,8 +14,9 @@
 #define QCWeChatPayConfig_h
 
 
+#import <UIKit/UIKit.h>
 #import "WXApi.h"
-#import "WXApiManager.h"
+#import "QCWeChatPayManager.h"      // 微信支付结果回调类
 #import "QCWeChatPayHandler.h"      // 微信支付调用类
 #import "QCWeChatSignAdaptor.h"     // 微信签名工具类
 #import "XMLDictionary.h"           // XML 转换工具类
@@ -27,17 +28,17 @@
  */
 
 // 开放平台开发者中心获取的 APPID https://open.weixin.qq.com
-#define QCWechatAPPID       @"wxb4ba3c02aa476ea1"   // @"wxbff3f84cc71554c*"
+#define QCWechatAPPID               @"wxb4ba3c02aa476ea1"   // @"wxbff3f84cc71554c*"
 
-// 开放平台开发者中心获取的 AppSecret https://open.weixin.qq.com
-#define QCWechatAPPSecret   @"e5d5a34eb45ad58b64d*bf2eef8b7*22"
+// 开放平台开发者中心获取的 商户号
+#define QCWechatMCHID               @"13809*9002"
 
-// 微信支付商户号
-#define QCWechatMCHID       @"13809*9002"
+// 开放平台开发者中心获取的 AppSecret
+#define QCWechatAPPSecret           @"e5d5a34eb45ad58b64d*bf2eef8b7*22"
 
 // 商户平台设置的 “API密钥” http://pay.weixin.qq.com
 // 安全校验码（MD5）密钥，为了安全，设置为以数字和字母组成的 32 字符串
-#define QCWechatPartnerKey  @"6de04e7247f9aab635966cee18*ccced"
+#define QCWechatPartnerKey          @"6de04e7247f9aab635966cee18*ccced"
 
 
 /**

@@ -1,5 +1,5 @@
 //
-//  WXApiManager.m
+//  QCWeChatPayManager.m
 //  QCWeChatPay
 //
 //  Created by JHQ0228 on 2016/12/20.
@@ -10,17 +10,19 @@
  *  微信支付结果回调类
  */
 
-#import "WXApiManager.h"
+#import "QCWeChatPayManager.h"
 
-@implementation WXApiManager
+@implementation QCWeChatPayManager
 
-#pragma mark - 单粒
+#pragma mark - 单例
 
 + (instancetype)sharedManager {
+    
+    static QCWeChatPayManager *instance;
+    
     static dispatch_once_t onceToken;
-    static WXApiManager *instance;
     dispatch_once(&onceToken, ^{
-        instance = [[WXApiManager alloc] init];
+        instance = [[self alloc] init];
     });
     return instance;
 }
@@ -33,7 +35,7 @@
         
         //支付返回结果，实际支付结果需要去微信服务器端查询
         NSString *strMsg;
-    
+        
         switch (resp.errCode) {
                 
             case WXSuccess:

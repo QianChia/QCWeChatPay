@@ -14,10 +14,10 @@
 
 @interface QCWeChatPayHandler : NSObject
 
-/// 发起微信 APP 端签名支付
-+ (void)QCWeChatPay_APP;
-
 /// 发起微信商户服务器端签名支付
 + (void)QCWeChatPay_SER;
+
+/// 发起微信 APP 端签名支付
++ (void)QCWeChatPay_APP;
 
 @end

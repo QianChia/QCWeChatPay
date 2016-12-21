@@ -28,94 +28,6 @@
 
 #pragma mark - Public Methods
 
-/// 发起微信 APP 端签名支付
-+ (void)QCWeChatPay_APP {
-    
-    NSString *tradeType = @"APP";                       // 交易类型
-    NSString *totalFee  = @"1";                         // 交易价格 1 表示 0.01 元，10 表示 0.1 元
-    NSString *tradeNO   = [self generateTradeNO];       // 随机字符串变量 这里最好使用和安卓端一致的生成逻辑
-    NSString *addressIP = [self fetchIPAddress];        // 设备IP地址，请再wifi环境下测试,否则获取的ip地址为error,正确格式应该是8.8.8.8
-    NSString *orderNo   = [NSString stringWithFormat:@"%ld",time(0)];       // 随机产生订单号用于测试，正式使用换成从自己服务器获取的订单号
-    NSString *notifyUrl = @"http://wxpay.weixin.qq.com/pub_v2/pay/notify.v2.php";   // 交易结果通知测试，随意填写，正式使用时填写正确网站
-    
-    // 获取 SIGN 签名
-    QCWeChatSignAdaptor *adaptor = [[QCWeChatSignAdaptor alloc] initWithWechatAppId:QCWechatAPPID
-                                                                        wechatMCHId:QCWechatMCHID
-                                                                            tradeNo:tradeNO
-                                                                   wechatPartnerKey:QCWechatPartnerKey
-                                                                           payTitle:@"充值"
-                                                                            orderNo:orderNo
-                                                                           totalFee:totalFee
-                                                                           deviceIp:addressIP
-                                                                          notifyUrl:notifyUrl
-                                                                          tradeType:tradeType];
-    
-    // 转换成 XML 字符串
-    NSString *string = [[adaptor dic] XMLString];       // 这里只是形似 XML，实际并不是正确的 XML 格式，需要使用 AF 方法进行转义
-    
-    // 创建统一下单
-    AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
-    sessionManager.responseSerializer = [[AFHTTPResponseSerializer alloc] init];
-    [sessionManager.requestSerializer setValue:@"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [sessionManager.requestSerializer setValue:kUrlWeChatUnifiedOrder forHTTPHeaderField:@"SOAPAction"];
-    [sessionManager.requestSerializer setQueryStringSerializationWithBlock:^NSString *(NSURLRequest *request, NSDictionary *parameters, NSError *__autoreleasing *error) {
-        return string;
-    }];
-    
-    [sessionManager POST:kUrlWeChatUnifiedOrder
-       parameters:string
-         progress:nil
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-         
-         // 输出 XML 数据
-         NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-              
-         // 将微信支付系统返回的 xml 数据解析转义成字典
-         NSDictionary *dic = [NSDictionary dictionaryWithXMLString:responseString];
-         
-         NSLog(@"dic = %@", [NSString stringWithFormat:@"%@", dic]);
-         
-         // 判断返回的许可
-         if ([[dic objectForKey:@"result_code"] isEqualToString:@"SUCCESS"]
-             &&[[dic objectForKey:@"return_code"] isEqualToString:@"SUCCESS"] ) {
-             
-             // 发起微信支付
-             PayReq *request = [[PayReq alloc] init];
-             
-             // 设置参数
-             request.openID = [dic objectForKey:WXAPPID];
-             request.partnerId = [dic objectForKey:WXMCHID];
-             request.prepayId= [dic objectForKey:WXPREPAYID];
-             request.package = @"Sign=WXPay";
-             request.nonceStr= [dic objectForKey:WXNONCESTR];
-             
-             // 将当前时间转化成时间戳
-             NSDate *datenow = [NSDate date];
-             NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
-             UInt32 timeStamp =[timeSp intValue];
-             request.timeStamp= timeStamp;
-             
-             // 签名加密
-             QCWeChatSignAdaptor *md5 = [[QCWeChatSignAdaptor alloc] init];
-             
-             request.sign=[md5 createMD5SingForPay:request.openID
-                                         partnerid:request.partnerId
-                                          prepayid:request.prepayId
-                                           package:request.package
-                                          noncestr:request.nonceStr
-                                         timestamp:request.timeStamp];
-             
-             
-             // 调用微信
-             [WXApi sendReq:request];
-         }
-         
-     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-         
-         NSLog(@"向微信支付系统请求预支付信息失败：%@", error.localizedDescription);
-     }];
-}
-
 /// 发起微信商户服务器端签名支付
 + (void)QCWeChatPay_SER {
     
@@ -183,6 +95,94 @@
 
         NSLog(@"向商户微信支付服务器端请求预支付信息失败：%@", error.localizedDescription);
     }];
+}
+
+/// 发起微信 APP 端签名支付
++ (void)QCWeChatPay_APP {
+    
+    NSString *tradeType = @"APP";                       // 交易类型
+    NSString *totalFee  = @"1";                         // 交易价格 1 表示 0.01 元，10 表示 0.1 元
+    NSString *tradeNO   = [self generateTradeNO];       // 随机字符串变量 这里最好使用和安卓端一致的生成逻辑
+    NSString *addressIP = [self fetchIPAddress];        // 设备IP地址，请再wifi环境下测试,否则获取的ip地址为error,正确格式应该是8.8.8.8
+    NSString *orderNo   = [NSString stringWithFormat:@"%ld",time(0)];       // 随机产生订单号用于测试，正式使用换成从自己服务器获取的订单号
+    NSString *notifyUrl = @"http://wxpay.weixin.qq.com/pub_v2/pay/notify.v2.php";   // 交易结果通知测试，随意填写，正式使用时填写正确网站
+    
+    // 获取 SIGN 签名
+    QCWeChatSignAdaptor *adaptor = [[QCWeChatSignAdaptor alloc] initWithWechatAppId:QCWechatAPPID
+                                                                        wechatMCHId:QCWechatMCHID
+                                                                            tradeNo:tradeNO
+                                                                   wechatPartnerKey:QCWechatPartnerKey
+                                                                           payTitle:@"充值"
+                                                                            orderNo:orderNo
+                                                                           totalFee:totalFee
+                                                                           deviceIp:addressIP
+                                                                          notifyUrl:notifyUrl
+                                                                          tradeType:tradeType];
+    
+    // 转换成 XML 字符串
+    NSString *string = [[adaptor dic] XMLString];       // 这里只是形似 XML，实际并不是正确的 XML 格式，需要使用 AF 方法进行转义
+    
+    // 创建统一下单
+    AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
+    sessionManager.responseSerializer = [[AFHTTPResponseSerializer alloc] init];
+    [sessionManager.requestSerializer setValue:@"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [sessionManager.requestSerializer setValue:kUrlWeChatUnifiedOrder forHTTPHeaderField:@"SOAPAction"];
+    [sessionManager.requestSerializer setQueryStringSerializationWithBlock:^NSString *(NSURLRequest *request, NSDictionary *parameters, NSError *__autoreleasing *error) {
+        return string;
+    }];
+    
+    [sessionManager POST:kUrlWeChatUnifiedOrder
+              parameters:string
+                progress:nil
+                 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                     
+                     // 输出 XML 数据
+                     NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+                     
+                     // 将微信支付系统返回的 xml 数据解析转义成字典
+                     NSDictionary *dic = [NSDictionary dictionaryWithXMLString:responseString];
+                     
+                     NSLog(@"dic = %@", [NSString stringWithFormat:@"%@", dic]);
+                     
+                     // 判断返回的许可
+                     if ([[dic objectForKey:@"result_code"] isEqualToString:@"SUCCESS"]
+                         &&[[dic objectForKey:@"return_code"] isEqualToString:@"SUCCESS"] ) {
+                         
+                         // 发起微信支付
+                         PayReq *request = [[PayReq alloc] init];
+                         
+                         // 设置参数
+                         request.openID = [dic objectForKey:WXAPPID];
+                         request.partnerId = [dic objectForKey:WXMCHID];
+                         request.prepayId= [dic objectForKey:WXPREPAYID];
+                         request.package = @"Sign=WXPay";
+                         request.nonceStr= [dic objectForKey:WXNONCESTR];
+                         
+                         // 将当前时间转化成时间戳
+                         NSDate *datenow = [NSDate date];
+                         NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
+                         UInt32 timeStamp =[timeSp intValue];
+                         request.timeStamp= timeStamp;
+                         
+                         // 签名加密
+                         QCWeChatSignAdaptor *md5 = [[QCWeChatSignAdaptor alloc] init];
+                         
+                         request.sign=[md5 createMD5SingForPay:request.openID
+                                                     partnerid:request.partnerId
+                                                      prepayid:request.prepayId
+                                                       package:request.package
+                                                      noncestr:request.nonceStr
+                                                     timestamp:request.timeStamp];
+                         
+                         
+                         // 调用微信
+                         [WXApi sendReq:request];
+                     }
+                     
+                 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                     
+                     NSLog(@"向微信支付系统请求预支付信息失败：%@", error.localizedDescription);
+                 }];
 }
 
 #pragma mark - Private Method
